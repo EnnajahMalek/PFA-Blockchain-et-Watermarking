@@ -1,0 +1,36 @@
+@startuml
+title Diag de sequence , Creation d'un diplome
+
+actor "Institution" as INST
+participant "DiplomaController" as CTRL
+participant "PDFMaker" as PDF
+participant "WatermarkService" as WM
+participant "HashService" as HASH
+participant "BlockchainService" as BC
+
+INST -> CTRL : issueDiploma(studentData)
+activate CTRL
+
+CTRL -> PDF : generatePDF(studentData)
+activate PDF
+PDF --> CTRL : diploma.pdf
+deactivate PDF
+
+CTRL -> WM : applyWatermark(diploma.pdf, studentId, promotionId)
+activate WM
+WM --> CTRL : diploma_watermarked.pdf
+deactivate WM
+
+CTRL -> HASH : computeHash(diploma_watermarked.pdf)
+activate HASH
+HASH --> CTRL : sha256Hash
+deactivate HASH
+
+CTRL -> BC : anchorHash(sha256Hash, metadata)
+activate BC
+BC --> CTRL : txHash, timestamp
+deactivate BC
+
+CTRL --> INST : { diploma_watermarked.pdf, txHash, timestamp }
+deactivate CTRL
+@enduml
