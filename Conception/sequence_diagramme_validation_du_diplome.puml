@@ -1,0 +1,37 @@
+@startuml
+title Diploma Verification — Sequence Diagram
+
+actor "Verifier" as VER
+participant "VerificationController" as CTRL
+participant "WatermarkExtractor" as WMX
+participant "HashService" as HASH
+participant "BlockchainService" as BC
+
+VER -> CTRL : uploadDiploma(file.pdf)
+activate CTRL
+
+CTRL -> WMX : extractWatermark(file.pdf)
+activate WMX
+WMX --> CTRL : watermarkData (studentId, promotionId)
+deactivate WMX
+
+CTRL -> HASH : computeHash(file.pdf)
+activate HASH
+HASH --> CTRL : sha256Hash
+deactivate HASH
+
+CTRL -> BC : queryHash(sha256Hash)
+activate BC
+BC --> CTRL : blockchainRecord (storedHash, metadata)
+deactivate BC
+
+CTRL -> CTRL : verify(\n  computedHash == storedHash\n  && watermarkData.valid\n)
+
+alt authentic
+    CTRL --> VER : { isAuthentic: true, issuedBy, issuedAt }
+else tampered
+    CTRL --> VER : { isAuthentic: false, reason: "hash mismatch / invalid watermark" }
+end
+
+deactivate CTRL
+@enduml
