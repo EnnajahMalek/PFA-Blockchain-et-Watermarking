@@ -82,7 +82,7 @@ Deux diagrammes PlantUML sont fournis dans le dossier `/docs` :
 - `sequence_diagramme_validation_du_diplome.puml` — couvre le flux de vérification, du dépôt du fichier jusqu'au résultat booléen `isAuthentic`.
 
 ---
-# Projet Final
+# Comment demarer l'application
 
 1. Créez un wallet Ethereum et assurez-vous qu'il possède un peu d'ETH Sepolia (testnet).
 2. Créez un compte Alchemy (https://www.alchemy.com/), créez une app sur le réseau
