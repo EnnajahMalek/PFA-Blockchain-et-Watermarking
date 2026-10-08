@@ -82,7 +82,31 @@ Deux diagrammes PlantUML sont fournis dans le dossier `/docs` :
 - `sequence_diagramme_validation_du_diplome.puml` — couvre le flux de vérification, du dépôt du fichier jusqu'au résultat booléen `isAuthentic`.
 
 ---
+# Projet Final
 
+1. Créez un wallet Ethereum et assurez-vous qu'il possède un peu d'ETH Sepolia (testnet).
+2. Créez un compte Alchemy (https://www.alchemy.com/), créez une app sur le réseau
+   "Ethereum Sepolia", et récupérez votre clé API (juste la clé, pas l'URL complète).
+3. Créez un fichier `.env` dans le dossier `Blockchain/` avec :
+
+PRIVATE_KEY=<votre-cle-privee-wallet>
+API_KEY=<votre-cle-alchemy>
+CONTRACT_ID=
+
+4. Installez la dépendance manquante pour le déploiement :
+
+pip install py-solc-x
+5. Creez un fichier `data.json` dans le dossier `Embedding/` 
+6. Déployez le smart contract :
+
+cd Blockchain
+python3 deploy.py
+
+   Cela compile et déploie `DiplomaRegistry.sol` sur Sepolia, puis remplit
+   automatiquement `CONTRACT_ID` dans `.env`.
+7. Pour exécuter la plateforme :
+   - Sous Windows, exécutez `run.bat`.
+   - Sous Ubuntu / n'importe quelle distro Linux, exécutez `run.sh`.
 ## Informations projet
 
 | Champ | Détail |
